@@ -5,7 +5,7 @@
 - FastAPI 缓存替换 Redis
 
 # 资源整理
-- 笔记📒：https://www.yuque.com/g/u1362970/ghc7h0/collaborator/join?token=NiOJTIM71xYRduLZ# 《mini-rbac》
+- 笔记📒：https://www.yuque.com/u1362970/ghc7h0/cgwyspowr5o5qkgp?singleDoc# 《3. 后端环境搭建》
 - 视频：https://space.bilibili.com/438858333/channel/collectiondetail?sid=903465
 - 前端：https://github.com/mini-rbac-web
 - 后端：https://github.com/mini-rbac-serve
