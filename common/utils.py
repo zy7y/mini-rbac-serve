@@ -27,6 +27,8 @@ def list2tree(
             tree.append(item)
         else:
             menu_item = menu_map.get(item[parent_name])
+            if menu_item is None:
+                break
             # 子节点
             if menu_item.get(children_name) is None:
                 menu_item[children_name] = []
