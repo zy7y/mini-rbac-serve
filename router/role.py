@@ -26,7 +26,7 @@ async def add_role(role: RoleSchema):
             role_obj = await Role.create(**role.dict())
             # 2. 校验菜单是否存在 并写入关联表
             for mid in mid_list:
-                menu = await Menu.get(id=mid)
+                menu = await Menu.get(id=mid, status=1)
                 await RoleMenu.create(role=role_obj, menu=menu)
         return R.success()
     except OperationalError as e:
@@ -49,7 +49,7 @@ async def edit_role(id: int, role: RoleSchema):
             await RoleMenu.filter(role_id=id).update(status=9)
             # 2. 校验菜单是否存在 并写入关联表
             for mid in mid_list:
-                menu = await Menu.get(id=mid)
+                menu = await Menu.get(id=mid, status=1)
                 # 可以通过 关联字段_id的形式传 关联表的主键
                 await RoleMenu.create(role_id=id, menu=menu)
         return R.success()
@@ -72,9 +72,9 @@ async def get_role(id: int):
     if role is None:
         return R.fail()
     # 查关联表菜单信息, 过滤菜单表的状态
-    data = RoleMenu.filter(role=role, status__not=9, menu__status=1).all()
+    data = await RoleMenu.filter(role=role, status__not=9, menu__status=1).all()
     # 通过表 role_menu对象 反查 多表(但其实我们这里应该都只有1条) menu
-    return R.success(data=[await item.menu.all() async for item in data])
+    return R.success(data=[await item.menu.all() for item in data])
 
 
 @router.delete("/{id}", summary="删除角色", response_model=R)
