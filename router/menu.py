@@ -5,7 +5,7 @@ from common.utils import list2tree
 from models.menu import Menu
 from schemas.menu import MenuInfo, MenuSchema, MenuTree
 
-router = APIRouter(prefix="/menus", tags=["菜单管理"])
+router = APIRouter(prefix="/menu", tags=["菜单管理"])
 
 
 @router.get("", summary="菜单🌲", response_model=R[MenuTree])

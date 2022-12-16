@@ -1,7 +1,7 @@
 """
 通用出入参数校验模型
 """
-from typing import Generic, TypeVar
+from typing import Generic, Optional, TypeVar
 
 from pydantic.generics import GenericModel
 
@@ -20,3 +20,8 @@ class R(GenericModel, Generic[T]):
     @staticmethod
     def fail(msg: str = "fail", data: T = None) -> "R":
         return R(code=400, msg=msg, data=data)
+
+
+class PageResult(GenericModel, Generic[T]):
+    items: Optional[T] = None
+    total: int = 0
