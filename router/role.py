@@ -6,8 +6,7 @@ from common.schemas import R
 from models.menu import Menu
 from models.role import Role
 from models.role_menu import RoleMenu
-from schemas.menu import MenuTree
-from schemas.role import RolePageList, RoleSchema
+from schemas.role import RoleInfo, RolePageList, RoleSchema
 
 router = APIRouter(prefix="/role", tags=["角色管理"])
 
@@ -66,7 +65,7 @@ async def query_role(offset: int = 1, limit: int = 10, name: str = ""):
     return R.success(data=RolePageList(items=data, total=total))
 
 
-@router.get("/{id}", summary="角色信息（权限）", response_model=R[MenuTree])
+@router.get("/{id}", summary="角色信息（权限）", response_model=R[RoleInfo])
 async def get_role(id: int):
     role = await Role.get_or_none(id=id, status__not=9)
     if role is None:

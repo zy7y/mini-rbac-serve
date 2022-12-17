@@ -7,7 +7,7 @@ class User(Table):
     username = fields.CharField(
         max_length=20, description="账号", unique=True, index=True
     )
-    password = fields.CharField(max_length=20, description="密码")
+    password = fields.CharField(max_length=128, description="密码")
     nickname = fields.CharField(max_length=20, description="昵称", index=True)
 
     class Meta:
