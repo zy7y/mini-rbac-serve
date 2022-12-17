@@ -21,6 +21,8 @@ TORTOISE_ORM = {
     },
 }
 
+redis_url = "redis://localhost"
+
 # tortoise orm logging
 import logging
 import sys

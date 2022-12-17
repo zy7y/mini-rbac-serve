@@ -25,3 +25,19 @@ class R(GenericModel, Generic[T]):
 class PageResult(GenericModel, Generic[T]):
     items: Optional[T] = None
     total: int = 0
+
+
+from pydantic import BaseModel
+
+
+class Login(BaseModel):
+    username: str
+    password: str
+
+
+class Token(BaseModel):
+    id: int
+    token: str
+
+
+LoginResult = Optional[Token]

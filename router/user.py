@@ -6,12 +6,18 @@ from tortoise.exceptions import OperationalError
 from tortoise.transactions import atomic
 
 from common.schemas import R
-from common.utils import get_password_hash
+from common.security import get_password_hash
 from models import Role
 from models.user import User
 from models.user_role import UserRole
-from schemas.user import (RoleStatus, UserDetail, UserInfo, UserPageResult,
-                          UserSchema, UserUpdate)
+from schemas.user import (
+    RoleStatus,
+    UserDetail,
+    UserInfo,
+    UserPageResult,
+    UserSchema,
+    UserUpdate,
+)
 
 router = APIRouter(prefix="/user", tags=["用户管理"])
 
