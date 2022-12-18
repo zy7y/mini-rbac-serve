@@ -1,16 +1,20 @@
+import json
 from typing import List
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from fastapi.encoders import jsonable_encoder
+from tortoise import connections
 from tortoise.exceptions import OperationalError
 from tortoise.transactions import atomic
 
 from common.schemas import R
-from common.security import get_password_hash
-from models import Role
+from common.security import check_token, get_password_hash, verify_password
+from common.utils import redis
+from models import Role, RoleMenu
 from models.user import User
 from models.user_role import UserRole
 from schemas.user import (
+    ResetPass,
     RoleStatus,
     UserDetail,
     UserInfo,
@@ -110,3 +114,48 @@ async def del_user(id: int):
     if result == 0:
         return R.fail()
     return R.success()
+
+
+@router.patch("/role/{id}", summary="切换角色", response_model=R)
+async def change_role(id: int, user: User = Depends(check_token)):
+    result = await UserRole.get_or_none(
+        user=user, role__id=id, status__not=5, role__status__not=9
+    )
+    if result is None:
+        return R.fail()
+    await UserRole.filter(user=user, status=5).update(status=1)
+    # tortoise.exceptions.OperationalError: (1052, "Column 'status' in field list is ambiguous")
+    # row = await UserRole.filter(user=user, role__id=id).update(status=5)
+    # row = await UserRole.filter(user=user, role=await Role.get(id=id)).update(status=5)
+    db = connections.get("default")
+    # TypeError: not all arguments converted during string formatting
+    # sql = "update sys_user_role set status=(?) where user_id=(?) and role_id=(?)"
+    sql = "update sys_user_role set status=(%s) where user_id=(%s) and role_id=(%s)"
+    row = await db.execute_query_dict(sql, [5, user.id, id])
+    if row == 0:
+        return R.fail()
+
+    # 更新redis
+    role_menu = await RoleMenu.filter(role__id=id, status__not=9).all()
+    permissions = []
+    for obj in role_menu:
+        permissions.append(
+            await obj.menu.filter(
+                status__not=9, api__not_isnull=True, method__not_isnull=True
+            ).values("api", "method")
+        )
+    # 5分钟
+    cache_key = f"{user.username}_{id}"
+    await redis.setex(cache_key, 300, json.dumps(permissions))
+    return R.success()
+
+
+@router.patch("/reset", summary="重置密码", response_model=R)
+async def reset_password(reset: ResetPass, user: User = Depends(check_token)):
+    if verify_password(reset.old_password, user.password):
+        row = await User.filter(id=user.id).update(
+            password=get_password_hash(reset.new_password)
+        )
+        if row == 1:
+            return R.success()
+    return R.fail()

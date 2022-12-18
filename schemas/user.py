@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from tortoise.contrib.pydantic import pydantic_model_creator
 
 from common.schemas import PageResult
@@ -39,3 +39,8 @@ class UserDetail(UserOut):
 UserInfo = Optional[UserDetail]
 
 UserPageResult = PageResult[List[UserOut]]
+
+
+class ResetPass(BaseModel):
+    new_password: str = Field(..., min_length=6, max_length=12)
+    old_password: str = Field(..., min_length=6, max_length=12)
