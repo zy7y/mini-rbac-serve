@@ -7,10 +7,10 @@ from tortoise import connections
 from tortoise.exceptions import OperationalError
 from tortoise.transactions import atomic
 
+from common.dbhelper import use_pagination
 from common.schemas import R
 from common.security import check_token, get_password_hash, verify_password
 from common.utils import redis
-from common.dbhelper import use_pagination
 from models import Role, RoleMenu
 from models.user import User
 from models.user_role import UserRole
@@ -18,11 +18,11 @@ from schemas.user import (
     ResetPass,
     RoleStatus,
     UserDetail,
+    UserFilter,
     UserInfo,
     UserPageResult,
     UserSchema,
     UserUpdate,
-    UserFilter,
 )
 
 router = APIRouter(prefix="/user", tags=["用户管理"])

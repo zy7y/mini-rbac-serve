@@ -1,12 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2b95c286-608c-4c07-8ce1-b16641390859" name="Changes" comment="">
+    <list default="true" id="2b95c286-608c-4c07-8ce1-b16641390859" name="Changes" comment="ref: 优化分页&amp;模糊查询">
+      <change afterPath="$PROJECT_DIR$/.pre-commit-config.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/mini-rbac-serve.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/mini-rbac-serve.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/dbhelper.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/dbhelper.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/schemas.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/schemas.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/pyproject.toml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/router/common.py" beforeDir="false" afterPath="$PROJECT_DIR$/router/common.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/router/role.py" beforeDir="false" afterPath="$PROJECT_DIR$/router/role.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/router/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/router/user.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/schemas/role.py" beforeDir="false" afterPath="$PROJECT_DIR$/schemas/role.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/schemas/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/schemas/user.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -48,6 +59,48 @@
     </key>
   </component>
   <component name="RunManager" selected="Python.main">
+    <configuration name="dbug" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="mini-rbac-serve" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/dbug.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="debug" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="mini-rbac-serve" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/debug.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="mini-rbac-serve" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -84,12 +137,16 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Python.dbug" />
+      <item itemvalue="Python.debug" />
       <item itemvalue="Python.main" />
       <item itemvalue="Python tests.Python tests for test_add.test_add_dir" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.debug" />
+        <item itemvalue="Python.dbug" />
         <item itemvalue="Python tests.Python tests for test_add.test_add_dir" />
       </list>
     </recent_temporary>
@@ -103,6 +160,14 @@
       <option name="presentableId" value="Default" />
       <updated>1670246717811</updated>
     </task>
+    <task id="LOCAL-00001" summary="ref: 优化分页&amp;模糊查询">
+      <created>1672239837755</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1672239837755</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -115,5 +180,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="ref: 优化分页&amp;模糊查询" />
+    <option name="LAST_COMMIT_MESSAGE" value="ref: 优化分页&amp;模糊查询" />
   </component>
 </project>

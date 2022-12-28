@@ -3,7 +3,7 @@ from typing import List, Optional
 from pydantic import Field
 from tortoise.contrib.pydantic import pydantic_model_creator
 
-from common.schemas import PageResult, Filter
+from common.schemas import Filter, PageResult
 from models.role import Role
 from schemas.menu import MenuTree
 

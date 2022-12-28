@@ -1,12 +1,10 @@
 """
 通用出入参数校验模型
 """
-import dataclasses
-from typing import Generic, Optional, TypeVar, List
+from typing import Generic, Optional, TypeVar
 
-from fastapi import Query
+from pydantic import BaseModel
 from pydantic.generics import GenericModel
-from pydantic import BaseModel, Field
 
 T = TypeVar("T")
 
@@ -28,6 +26,7 @@ class R(GenericModel, Generic[T]):
 class Pagination(GenericModel, Generic[T]):
     items: Optional[T] = None
     total: int = 0
+
 
 class PageResult(GenericModel, Generic[T]):
     items: Optional[T] = None
@@ -54,4 +53,4 @@ class Page(BaseModel):
 
 class Filter(Page):
     status: int = 1
-    ordering: str = '-created'
+    ordering: str = "-created"

@@ -2,12 +2,12 @@ from fastapi import APIRouter, Depends
 from tortoise.exceptions import OperationalError
 from tortoise.transactions import in_transaction
 
+from common.dbhelper import use_pagination
 from common.schemas import R
 from models.menu import Menu
 from models.role import Role
 from models.role_menu import RoleMenu
-from schemas.role import RoleInfo, RolePageList, RoleSchema, RoleFilter
-from common.dbhelper import use_pagination
+from schemas.role import RoleFilter, RoleInfo, RolePageList, RoleSchema
 
 router = APIRouter(prefix="/role", tags=["角色管理"])
 

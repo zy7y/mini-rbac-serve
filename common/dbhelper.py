@@ -1,10 +1,10 @@
-from typing import Type, Set
+from typing import Set, Type
 
 from fastapi import HTTPException
-from tortoise.models import MODEL
 from tortoise.exceptions import FieldError
+from tortoise.models import MODEL
 
-from common.schemas import PageResult, Filter
+from common.schemas import Filter, PageResult
 
 
 async def use_pagination(filters: Filter, model: Type[MODEL], exclude: Set[str] = None):
@@ -17,7 +17,7 @@ async def use_pagination(filters: Filter, model: Type[MODEL], exclude: Set[str] 
     """
     # 1. 排除分页、排序字段，得到一个过滤条件的字典
     if exclude is None:
-        exclude = {'offset', 'limit', 'ordering'}
+        exclude = {"offset", "limit", "ordering"}
 
     _filters = filters.dict(exclude=exclude)
     # 2. 计算分页起

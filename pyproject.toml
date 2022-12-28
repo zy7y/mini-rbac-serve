@@ -2,3 +2,11 @@
 tortoise_orm = "common.conf.TORTOISE_ORM"
 location = "./migrations"
 src_folder = "./."
+
+[tool.black]
+line-length = 88
+target-version = ["py38"]
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3

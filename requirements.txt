@@ -1,9 +1,12 @@
 aerich==0.7.1
 aiomysql==0.1.1
 aioredis==2.0.1
+bcrypt==4.0.1
 fastapi==0.88.0
 loguru==0.6.0
 passlib==1.7.4
+pre-commit==2.21.0
+python-jose==3.3.0
 tortoise-orm==0.19.2
 uvicorn==0.20.0
 websockets==10.4
