@@ -1,9 +1,12 @@
 """
 通用出入参数校验模型
 """
-from typing import Generic, Optional, TypeVar
+import dataclasses
+from typing import Generic, Optional, TypeVar, List
 
+from fastapi import Query
 from pydantic.generics import GenericModel
+from pydantic import BaseModel, Field
 
 T = TypeVar("T")
 
@@ -22,12 +25,13 @@ class R(GenericModel, Generic[T]):
         return R(code=400, msg=msg, data=data)
 
 
-class PageResult(GenericModel, Generic[T]):
+class Pagination(GenericModel, Generic[T]):
     items: Optional[T] = None
     total: int = 0
 
-
-from pydantic import BaseModel
+class PageResult(GenericModel, Generic[T]):
+    items: Optional[T] = None
+    total: int = 0
 
 
 class Login(BaseModel):
@@ -41,3 +45,13 @@ class Token(BaseModel):
 
 
 LoginResult = Optional[Token]
+
+
+class Page(BaseModel):
+    offset: int = 1
+    limit: int = 10
+
+
+class Filter(Page):
+    status: int = 1
+    ordering: str = '-created'

@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from tortoise.exceptions import OperationalError
 from tortoise.transactions import in_transaction
 
@@ -6,7 +6,8 @@ from common.schemas import R
 from models.menu import Menu
 from models.role import Role
 from models.role_menu import RoleMenu
-from schemas.role import RoleInfo, RolePageList, RoleSchema
+from schemas.role import RoleInfo, RolePageList, RoleSchema, RoleFilter
+from common.dbhelper import use_pagination
 
 router = APIRouter(prefix="/role", tags=["角色管理"])
 
@@ -57,12 +58,9 @@ async def edit_role(id: int, role: RoleSchema):
 
 
 @router.get("", summary="角色列表", response_model=R[RolePageList])
-async def query_role(offset: int = 1, limit: int = 10, name: str = ""):
-    offset = (offset - 1) * limit
-    role_filter = Role.filter(status=1, role_name__icontains=name)
-    data = await role_filter.offset(offset).limit(limit)
-    total = await role_filter.count()
-    return R.success(data=RolePageList(items=data, total=total))
+async def query_role(query: RoleFilter = Depends()):
+    data = await use_pagination(query, Role)
+    return R.success(data=data)
 
 
 @router.get("/{id}", summary="角色信息（权限）", response_model=R[RoleInfo])

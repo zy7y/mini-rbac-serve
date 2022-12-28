@@ -3,7 +3,7 @@ from typing import List, Optional
 from pydantic import BaseModel, Field
 from tortoise.contrib.pydantic import pydantic_model_creator
 
-from common.schemas import PageResult
+from common.schemas import PageResult, Filter
 from models.user import User
 
 UserIn = pydantic_model_creator(User, name="UserIn", exclude_readonly=True)
@@ -44,3 +44,8 @@ UserPageResult = PageResult[List[UserOut]]
 class ResetPass(BaseModel):
     new_password: str = Field(..., min_length=6, max_length=12)
     old_password: str = Field(..., min_length=6, max_length=12)
+
+
+class UserFilter(Filter):
+    username__icontains: str = Field('', alias='username')
+    nickname__icontains: str = Field('', alias='nickname')

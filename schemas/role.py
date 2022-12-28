@@ -3,7 +3,7 @@ from typing import List, Optional
 from pydantic import Field
 from tortoise.contrib.pydantic import pydantic_model_creator
 
-from common.schemas import PageResult
+from common.schemas import PageResult, Filter
 from models.role import Role
 from schemas.menu import MenuTree
 
@@ -20,3 +20,7 @@ class RoleSchema(RoleIn):
 RoleInfo = Optional[MenuTree]
 
 RolePageList = PageResult[List[RoleOut]]
+
+
+class RoleFilter(Filter):
+    role_name__icontains: str = Field("", alias="name")

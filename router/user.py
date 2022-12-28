@@ -10,6 +10,7 @@ from tortoise.transactions import atomic
 from common.schemas import R
 from common.security import check_token, get_password_hash, verify_password
 from common.utils import redis
+from common.dbhelper import use_pagination
 from models import Role, RoleMenu
 from models.user import User
 from models.user_role import UserRole
@@ -21,22 +22,16 @@ from schemas.user import (
     UserPageResult,
     UserSchema,
     UserUpdate,
+    UserFilter,
 )
 
 router = APIRouter(prefix="/user", tags=["用户管理"])
 
 
 @router.get("", summary="用户列表", response_model=R[UserPageResult])
-async def query_user(
-    offset: int = 1, limit: int = 10, username: str = "", nickname: str = ""
-):
-    offset = (offset - 1) * limit
-    _filter = User.filter(
-        status=1, username__icontains=username, nickname__icontains=nickname
-    )
-    data = await _filter.offset(offset).limit(limit)
-    total = await _filter.count()
-    return R.success(data=UserPageResult(items=data, total=total))
+async def query_user(query: UserFilter = Depends()):
+    data = await use_pagination(query, User)
+    return R.success(data=data)
 
 
 @router.get("/{id}", summary="用户信息", response_model=R[UserInfo])
