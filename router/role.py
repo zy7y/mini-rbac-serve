@@ -4,6 +4,7 @@ from tortoise.transactions import in_transaction
 
 from common.dbhelper import use_pagination
 from common.schemas import R
+from common.utils import list2tree
 from models.menu import Menu
 from models.role import Role
 from models.role_menu import RoleMenu
@@ -70,8 +71,12 @@ async def get_role(id: int):
         return R.fail()
     # 查关联表菜单信息, 过滤菜单表的状态
     data = await RoleMenu.filter(role=role, status__not=9, menu__status=1).all()
-    # 通过表 role_menu对象 反查 多表(但其实我们这里应该都只有1条) menu
-    return R.success(data=[await item.menu.all() for item in data])
+
+    menus = [await item.menu.all().values() for item in data]
+    identifiers = [
+        menu["identifier"] for menu in menus if menu["identifier"] is not None
+    ]
+    return R.success(data=RoleInfo(menus=list2tree(menus), identifiers=identifiers))
 
 
 @router.delete("/{id}", summary="删除角色", response_model=R)

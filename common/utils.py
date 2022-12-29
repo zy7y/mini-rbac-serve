@@ -1,14 +1,15 @@
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 import aioredis
 from aioredis import Redis
 
 from common.conf import redis_url
+from schemas.menu import MenuTree
 
 # 源数据类型
 SourceList = List[Dict[str, Any]]
 
-SourceTree = SourceList
+SourceTree = Optional[MenuTree]
 
 
 def list2tree(

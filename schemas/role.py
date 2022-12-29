@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-from pydantic import Field
+from pydantic import BaseModel, Field
 from tortoise.contrib.pydantic import pydantic_model_creator
 
 from common.schemas import Filter, PageResult
@@ -16,8 +16,10 @@ class RoleSchema(RoleIn):
     menu_ids: List[int] = Field(..., description="菜单 id 列表")
 
 
-# fix 角色 不存在时模型数据为空
-RoleInfo = Optional[MenuTree]
+class RoleInfo(BaseModel):
+    menus: Optional[MenuTree]
+    identifiers: Optional[List[str]]
+
 
 RolePageList = PageResult[List[RoleOut]]
 
