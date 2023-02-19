@@ -38,14 +38,15 @@ async def add_role(role: RoleSchema):
 async def edit_role(id: int, role: RoleSchema):
     mid_list = role.menu_ids
     del role.menu_ids
+    result = await Role.get_or_none(id=id)
+    if result is None:
+        return R.fail(msg="角色不存在")
 
     try:
         # 事务如果出错回滚
         async with in_transaction():
             # 1. 更新角色
-            result = await Role.filter(id=id).update(**role.dict())
-            if result == 0:
-                return R.fail()
+            await Role.filter(id=id).update(**role.dict())
             # 1.1 删除关联表的菜单数据
             await RoleMenu.filter(role_id=id).update(status=9)
             # 2. 校验菜单是否存在 并写入关联表
